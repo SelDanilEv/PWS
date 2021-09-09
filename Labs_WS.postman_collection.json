@@ -9,7 +9,7 @@
 			"name": "Lab1",
 			"item": [
 				{
-					"name": "http://localhost:58610/.sde",
+					"name": "Get",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -28,12 +28,12 @@
 					"response": []
 				},
 				{
-					"name": "http://localhost:58610/.sde",
+					"name": "Push",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:58610/.sde?add=1",
+							"raw": "http://localhost:58610/.sde?add=5",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -45,7 +45,7 @@
 							"query": [
 								{
 									"key": "add",
-									"value": "1"
+									"value": "5"
 								}
 							]
 						}
@@ -53,7 +53,7 @@
 					"response": []
 				},
 				{
-					"name": "http://localhost:58610/.sde",
+					"name": "SetResult",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -78,7 +78,7 @@
 					"response": []
 				},
 				{
-					"name": "http://localhost:58610/.sde",
+					"name": "Pop",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -91,6 +91,103 @@
 							"port": "58610",
 							"path": [
 								".sde"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Lab2",
+			"item": [
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44390/api/stack",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44390",
+							"path": [
+								"api",
+								"stack"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Push",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44390/api/stack?add=1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44390",
+							"path": [
+								"api",
+								"stack"
+							],
+							"query": [
+								{
+									"key": "add",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SetResult",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44390/api/stack?result=10",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44390",
+							"path": [
+								"api",
+								"stack"
+							],
+							"query": [
+								{
+									"key": "result",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pop",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44390/api/stack",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44390",
+							"path": [
+								"api",
+								"stack"
 							]
 						}
 					},

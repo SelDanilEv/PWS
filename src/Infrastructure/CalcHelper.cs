@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Infrastructure.Model;
+using System.Collections.Generic;
 using System.Linq;
 
-namespace Lab1
+namespace Infrastructure
 {
     public static class CalcHelper
     {
@@ -13,7 +14,7 @@ namespace Lab1
 
         public static int CalcResultAsCurrentAndFirst(Result result)
         {
-            var stackArray = result.stack.ToArray();
+            var stackArray = Result.stack.ToArray();
             return stackArray.FirstOrDefault() + result.result;
         }
     }

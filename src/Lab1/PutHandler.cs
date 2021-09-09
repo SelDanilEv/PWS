@@ -1,11 +1,9 @@
 ﻿using Infrastructure;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
-using System.Web.Script.Serialization;
+using Infrastructure.Model;
+using Infrastructure.Services;
 using System.Web.SessionState;
 
 namespace Lab1
@@ -14,29 +12,39 @@ namespace Lab1
     {
         public void ProcessRequest(HttpContext context)
         {
+            int parameter;
+            var parameterName = "add";
+
             var req = context.Request;
             var res = context.Response;
 
             res.ContentType = "application/json";
 
-            var result = new Result { result = 0, stack = new Stack<int>() };
+            var result = new Result { result = 0 };
 
-            if (context.Session[LabsOptions.SessionDataName] is Result data)
+            if (context.Session[LabOptions.SessionDataName] is Result data)
             {
                 result = data;
             }
 
-            int parameter;
 
-            if (int.TryParse(req.Params["add"], out parameter))
+            if (int.TryParse(req.Params[parameterName], out parameter))
             {
-                result.stack.Push(parameter);
+                Result.stack.Push(parameter);
                 result.result = CalcHelper.CalcResultAsCurrentAndFirst(result);
 
-                context.Session.Add(LabsOptions.SessionDataName, result);
+                context.Session.Add(LabOptions.SessionDataName, result);
+            }
+            else
+            {
+                result = new Result()
+                {
+                    statusMessage = new UserErrorMessagesService().
+                        GetErrorMessage(ErrorMessageType.CheckParam, parameterName)
+                };
             }
 
-            res.Write(JsonConvert.SerializeObject(result));
+            res.Write(JsonConvert.SerializeObject(result.ToDto()));
         }
 
         public bool IsReusable

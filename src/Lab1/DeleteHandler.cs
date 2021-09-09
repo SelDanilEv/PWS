@@ -3,6 +3,8 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.SessionState;
+using Infrastructure.Model;
+using Infrastructure.Services;
 
 namespace Lab1
 {
@@ -14,19 +16,24 @@ namespace Lab1
 
             res.ContentType = "application/json";
 
-            var result = new Result { result = 0, stack = new Stack<int>() };
+            var result = new Result { result = 0 };
 
-            if (context.Session[LabsOptions.SessionDataName] is Result data)
+            if (context.Session[LabOptions.SessionDataName] is Result data)
             {
                 result = data;
             }
 
-            result.stack.Pop();
-            result.result = CalcHelper.CalcResultAsCurrentAndFirst(result);
+            if (Result.stack.Count > 0)
+            {
+                Result.stack.Pop();
+                result.result = CalcHelper.CalcResultAsCurrentAndFirst(result);
+            }
+            else
+            {
+                result = new Result() { statusMessage = new UserErrorMessagesService().GetErrorMessage(ErrorMessageType.EmptyStack) };
+            }
 
-            context.Session.Add(LabsOptions.SessionDataName, result);
-
-            res.Write(JsonConvert.SerializeObject(result));
+            res.Write(JsonConvert.SerializeObject(result.ToDto()));
         }
 
         public bool IsReusable

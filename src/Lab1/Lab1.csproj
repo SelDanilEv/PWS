@@ -75,13 +75,11 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CalcHelper.cs" />
     <Compile Include="DeleteHandler.cs" />
     <Compile Include="GetHandler.cs" />
     <Compile Include="PostHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PutHandler.cs" />
-    <Compile Include="Result.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

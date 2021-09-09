@@ -1,0 +1,94 @@
+﻿<div style="width:fit-content;margin: 0 auto; margin-top:10%;display:flex;flex-direction:row;justify-content:center">
+    <div style="display: flex; flex-direction: column">
+        <input type="number" id="parameter" placeholder="number" />
+        <input type="button" id="GET" value="GET" onclick="ProccessRequest(this)" />
+        <input type="button" id="POST" value="POST" onclick="ProccessRequest(this)" />
+        <input type="button" id="PUT" value="PUT" onclick="ProccessRequest(this)" />
+        <input type="button" id="DELETE" value="DELETE" onclick="ProccessRequest(this)" />
+    </div>
+    <div style="margin-left:50px">
+        <div class="success_result" style="display: flex; flex-direction: column;">
+            <input type="text" id="stack" readonly value="stack" />
+            <input type="text" id="result" readonly value="result" />
+        </div>
+        <div class="failure_result" style="display:none">
+            <input type="text" id="errorMessage" style="color:red" readonly value="errorMessage" />
+        </div>
+    </div>
+</div>
+
+<style>
+    input {
+        margin: 5px 2px;
+    }
+</style>
+
+<script>
+    let host = window.location.protocol + "//" + window.location.host + "/api/stack";
+
+    async function ProccessRequest(elem) {
+
+        let parameter = document.getElementById("parameter").value;
+        console.log("Parameter");
+        console.log(parameter);
+
+        console.log("Method");
+        let method = elem.id;
+        console.log(method);
+
+        let body = null;
+
+        switch (method) {
+            case "POST":
+                body = +parameter;
+                break;
+            case "PUT":
+                body = +parameter;
+                break;
+        }
+
+        console.log("body");
+        body = !!body ? body : undefined
+
+        console.log(body);
+
+        fetch(host, {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: body
+        })
+            .then((result) => result.json())
+            .then((response) => {
+                let errorMessage = response.Message || response.statusMessage || "";
+
+                console.log("Response");
+                console.log(response);
+                console.log("Error message");
+                console.log(errorMessage);
+
+                if (!errorMessage) {
+                    ShowSuccessResult(response);
+                }
+                else {
+                    ShowFailureResult(errorMessage);
+                }
+            });
+    }
+
+    function ShowSuccessResult(result) {
+        document.getElementsByClassName("failure_result")[0].style.display = "none";
+        document.getElementsByClassName("success_result")[0].style.display = "flex";
+
+        document.getElementById("stack").value = result.stack;
+        document.getElementById("result").value = result.result;
+    }
+
+    function ShowFailureResult(message) {
+        document.getElementsByClassName("failure_result")[0].style.display = "block";
+        document.getElementsByClassName("success_result")[0].style.display = "none";
+
+        document.getElementById("errorMessage").value = message;
+    }
+</script>
