@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Web;
+﻿using System.Web;
 using System.Web.SessionState;
 using Infrastructure;
+using Infrastructure.Enum;
 using Infrastructure.Model;
-using Infrastructure.Services;
 using Newtonsoft.Json;
+using Services;
 
 namespace Lab1
 {

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Infrastructure.Enum;
 
-namespace Infrastructure.Services
+namespace Services
 {
     public class UserErrorMessagesService
     {
