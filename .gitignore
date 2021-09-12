@@ -83,3 +83,8 @@ passwords.txt
 Web.Debug.config
 Web.Release.config
 
+#Except:
+!deploy/
+!deploy/*/
+!deploy/*/bin/
+!deploy/*/bin/*.dll
