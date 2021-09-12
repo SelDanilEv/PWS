@@ -78,9 +78,8 @@ _[Ss]cripts
 src/.vs
 
 #my git ignores
+MongoConnectionString.txt
 passwords.txt
-appsettings.json
-appsettings.Test.json
-appsettings.Development.json
-
+Web.Debug.config
+Web.Release.config
 
