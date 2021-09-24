@@ -5,44 +5,42 @@ using Infrastructure.Models;
 using Repository;
 using Repository.Interfaces;
 using Infrastructure.Option;
+using Infrastructure.Model.MongoFluentOptions;
 
 namespace Services
 {
-    public class CommonService<T> : IService<T> where T : IBaseModel
+    public class CommonService<T> : BaseCommonService<T> where T:IBaseModel
     {
-        private IRepository<T> _repository;
-
-        public CommonService(MongoOptions mongoOptions)
+        public CommonService(MongoOptions mongoOptions) : base(mongoOptions)
         {
-            _repository = RepositoryFactory.CreateRepository<T>(mongoOptions);
         }
 
         #region CRUD
-        public async Task<IList<T>> GetItems()
+        public override async Task<IList<T>> GetItems(MongoFluentOptions<T> options)
         {
-            var itemsResult = await _repository.GetItemsAsync();
+            var itemsResult = await _repository.GetItemsAsync(options);
 
             return itemsResult;
         }
 
-        public async Task<T> GetItemById(string id)
+        public override async Task<T> GetItemById(string id)
         {
             var itemResult = await _repository.GetItemAsync(id);
 
             return itemResult;
         }
 
-        public async Task AddItem(T newItem)
+        public override async Task AddItem(T newItem)
         {
             await _repository.AddItemAsync(newItem);
         }
 
-        public async Task UpdateItem(T newItem)
+        public override async Task UpdateItem(T newItem)
         {
             await _repository.UpdateItemAsync(newItem);
         }
 
-        public async Task RemoveItem(string id)
+        public override async Task RemoveItem(string id)
         {
             await _repository.RemoveItemAsync(id);
         }

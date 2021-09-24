@@ -1,4 +1,5 @@
-﻿using Infrastructure.Models;
+﻿using Infrastructure.Model.MongoFluentOptions;
+using Infrastructure.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,7 +7,7 @@ namespace Services.Interfaces
 {
     public interface IService<T> where T:IBaseModel
     {
-        Task<IList<T>> GetItems();
+        Task<IList<T>> GetItems(MongoFluentOptions<T> options);
 
         Task<T> GetItemById(string id);
 

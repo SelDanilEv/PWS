@@ -15,7 +15,7 @@ namespace Repository
 
             if (typeof(T) == typeof(Student))
             {
-                return (IRepository<T>)new CommonMongoRepository<Student>(mongoOption, MongoCollection.Student);
+                return (IRepository<T>)new CommonRepository<Student>(mongoOption, MongoCollection.Student);
             }
 
             throw new InvalidOperationException();

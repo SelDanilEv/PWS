@@ -11,8 +11,16 @@ namespace Lab3.Controllers
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
+            ViewBag.FirstGetUrl = "api/student";
 
             return View();
+        }
+        public ActionResult Error(string message)
+        {
+            ViewBag.Title = "Error";
+            ViewBag.ErrorMessage = message;
+
+            return PartialView("Error");
         }
     }
 }

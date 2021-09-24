@@ -110,8 +110,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\FindFluentHelper.cs" />
+    <Compile Include="Interfaces\IMongoRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Mongo\BaseMongoRepository.cs" />
+    <Compile Include="Mongo\CommonRepository.cs" />
     <Compile Include="Mongo\CommonMongoRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryFactory.cs" />

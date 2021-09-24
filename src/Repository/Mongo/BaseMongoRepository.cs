@@ -6,10 +6,11 @@ using MongoDB.Driver;
 using Infrastructure.Option;
 using Infrastructure.Models;
 using Repository.Interfaces;
+using Infrastructure.Model.MongoFluentOptions;
 
 namespace Repository.Mongo
 {
-    public abstract class BaseMongoRepository<Model> : IRepository<Model> where Model : IBaseModel
+    public abstract class BaseMongoRepository<Model> : IMongoRepository<Model> where Model : IBaseModel
     {
         protected IMongoDatabase database;
 
@@ -21,27 +22,17 @@ namespace Repository.Mongo
             database = client.GetDatabase(connection.DatabaseName);
         }
 
-        public virtual Task AddItemAsync(Model newMenuItem)
+        public virtual Task AddItemAsync(Model newItem)
         {
             throw new NotImplementedException();
         }
 
-        public virtual Task<Model> GetItemAsync(string id)
+        public virtual IFindFluent<Model, Model> GetItemAsync(string id)
         {
             throw new NotImplementedException();
         }
 
-        public virtual Task<IList<Model>> GetItemsAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual Task<IList<Model>> GetItemsWithFilterAsync(FilterDefinition<Model> filter)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual Task<Model> GetItemWithFilterAsync(FilterDefinition<Model> filter)
+        public virtual IFindFluent<Model, Model> GetItemsAsync(MongoFluentOptions<Model> options)
         {
             throw new NotImplementedException();
         }
@@ -51,7 +42,7 @@ namespace Repository.Mongo
             throw new NotImplementedException();
         }
 
-        public virtual Task UpdateItemAsync(Model newMenuItem)
+        public virtual Task UpdateItemAsync(Model newItem)
         {
             throw new NotImplementedException();
         }
@@ -60,13 +51,6 @@ namespace Repository.Mongo
         {
             var sortedList = unsortedList.OrderBy(x => x.Id);
             return sortedList.ToList();
-        }
-    }
-
-    public class BaseJSONRepository : BaseMongoRepository<BaseModel>
-    {
-        public BaseJSONRepository(MongoOptions mongoOption) : base (mongoOption)
-        {
         }
     }
 }

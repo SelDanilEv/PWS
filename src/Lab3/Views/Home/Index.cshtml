@@ -1,24 +1,221 @@
-﻿<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+﻿<div style="width:fit-content;margin: 0 auto; margin-top:10%;display:flex;flex-direction:row;justify-content:center">
+    <div style="display: flex; flex-direction: column">
+        <input type="text" id="NAME" placeholder="Name" />
+        <input type="text" id="PHONE" placeholder="Phone" />
+        <input type="number" id="LIMIT" placeholder="Limit" />
+        <div><label>Sort by name</label><input type="checkbox" id="SORTBYNAME" /></div>
+        <input type="number" id="OFFSET" placeholder="Offset" />
+        <input type="text" id="LIKE" placeholder="like for name" />
+        <input type="text" id="COLUMNS" placeholder="columns (,<- separator)" />
+        <input type="text" id="GLOBALLIKE" placeholder="global like" />
+        <select id="contentType">
+            <option value="json" selected>JSON</option>
+            <option value="xml">XML</option>
+        </select>
+        <input type="button" id="GET" value="GET" onclick="ProccessRequest(this)" />
+        <input type="button" id="POST" value="POST" onclick="ProccessRequest(this)" />
+        <div><label>AutoGet</label><input type="checkbox" id="AUTOGET" /></div>
+        <div><label>Generate exception</label><input type="checkbox" id="ERRORSAMPLE" /></div>
+    </div>
+    <div style="margin-left:50px">
+        <div class="result" style="display: flex; flex-direction: column;">
+
+        </div>
+    </div>
 </div>
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-        a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-        is an ideal platform for building RESTful applications on the .NET Framework.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
-    </div>
-</div>
+
+<style>
+    input {
+        margin: 5px 2px;
+    }
+</style>
+
+<script>
+    let host = window.location.protocol + "//" + window.location.host + "/";
+    let StartUrl = host + "@ViewBag.FirstGetUrl";
+
+    function ProccessGet() {
+        let contentType = $("#contentType").val();
+        let contentTypeCustom = "application/" + contentType;        
+
+        let params = "?";
+        params += `ContentType=${contentType.toUpperCase()}&` +
+            `Limit=${$("#LIMIT").val()}&` +
+            `SortByName=${$("#SORTBYNAME")[0].checked}&` +
+            `Offset=${$("#OFFSET").val()}&` +
+            `Like=${$("#LIKE").val()}&` +
+            `Columns=${$("#COLUMNS").val()}&` +
+            `ThrowException=${$("#ERRORSAMPLE")[0].checked}&` +
+            `GlobalLike=${$("#GLOBALLIKE").val()}`;
+
+        $.ajax({
+            url: StartUrl + params,
+            method: "GET",
+            contentType: contentTypeCustom,
+            success: result => {
+                if (contentType.toLowerCase() === "xml") {
+                    result = ConvertStudentResultFromXMLToJson(result);
+                }
+
+                let html = "<table>";
+                html += "<tr><td>ID</td><td>Name</td><td>Phone</td><td>Actions</td></tr>"
+
+                result.Students.forEach(student => {
+                    html +=
+                        "<tr>" +
+                        "<td>" + student.id + "</td>" +
+                        "<td><input type='text' id='name" + student.id + "' value='" + student.name + "' /></td>" +
+                        "<td><input type='text' id='phone" + student.id + "' value='" + student.phone + "' /></td><td>";
+                    student.hateoasList.forEach(hateoas => {
+                        html += `<button studentId="${student.id}" method="${hateoas.Method}" url="${hateoas.Href}" onclick='proccessAction(this)'>${hateoas.Ref}</button>`;
+                    });
+                    html += "</td></tr>";
+                })
+
+                ShowResult(html);
+            },
+            error: (error) => {
+                console.log(error);
+
+                if (contentType.toLowerCase() === "xml") {
+                    error = ConvertErrorResultFromXMLToJson(error.responseXML);
+                }
+                
+                let html = `<button onclick='ProccessError(this)' method="${error.HATEOAS.Method}" url='${error.HATEOAS.Href}'>${error.HATEOAS.Ref}</button>`;
+
+                ShowResult(html);
+            }
+        })
+    }
+
+    function ProccessPost() {
+        let params = {};
+        if ($("#NAME").val() != "") params["name"] = $("#NAME").val();
+        if ($("#PHONE").val() != "") params["phone"] = $("#PHONE").val();
+
+        $.ajax({
+            url: StartUrl,
+            method: "POST",
+            data: params,
+            success: result => {
+            },
+            error: (error) => {
+                console.log(error);
+            }
+        })
+
+        if ($("#AUTOGET")[0].checked) {
+            setTimeout(ProccessGet, 500);
+        }
+    }
+
+    function ProccessError(errorHateoas) {
+        let method = errorHateoas.getAttribute("method");;
+        let url = errorHateoas.getAttribute("url");;
+
+        $.ajax({
+            url: url,
+            method: method,
+            success: result => {
+                ShowResult(result)
+            },
+            error: (error) => {
+                console.log(error);
+            }
+        })
+    }
+
+    function proccessAction(button) {
+        let studentId = button.getAttribute("studentid");;
+        let method = button.getAttribute("method");;
+        let url = button.getAttribute("url");;
+
+        let body = {}
+        body["id"] = studentId
+        body["name"] = $(`#name${studentId}`).val()
+        body["phone"] = $(`#phone${studentId}`).val()
+
+        $.ajax({
+            url: url,
+            method: method,
+            data: body,
+            success: result => {
+            },
+            error: (error) => {
+                console.log(error);
+            }
+        })
+
+        if ($("#AUTOGET")[0].checked) {
+            setTimeout(ProccessGet, 500);
+        }
+    }
+
+    async function ProccessRequest(elem) {
+        let method = elem.id;
+
+        switch (method) {
+            case "GET":
+                ProccessGet();
+                break;
+            case "POST":
+                ProccessPost();
+                break;
+            case "PUT":
+                break;
+            case "DELETE":
+                break;
+        }
+    }
+
+    function ShowResult(result) {
+
+        $(".result:first").html(result)
+    }
+
+    function ConvertStudentResultFromXMLToJson(result) {
+        result = xml2json(result);
+        result = result.Lab3_Result;
+        result.Students = result.Students.StudentHateoas;
+        for (let i = 0; i < result.Students.length; i++) {
+            result.Students[i].hateoasList = result.Students[i].hateoasList.HATEOAS
+        }
+
+        return result;
+    }
+
+    function ConvertErrorResultFromXMLToJson(result) {
+        result = xml2json(result);
+        result = result.Lab3_ErrorResult;
+
+        return result;
+    }
+
+    function xml2json(xml) {
+        try {
+            var obj = {};
+            if (xml.children.length > 0) {
+                for (var i = 0; i < xml.children.length; i++) {
+                    var item = xml.children.item(i);
+                    var nodeName = item.nodeName;
+
+                    if (typeof (obj[nodeName]) == "undefined") {
+                        obj[nodeName] = xml2json(item);
+                    } else {
+                        if (typeof (obj[nodeName].push) == "undefined") {
+                            var old = obj[nodeName];
+                            obj[nodeName] = [];
+                            obj[nodeName].push(old);
+                        }
+                        obj[nodeName].push(xml2json(item));
+                    }
+                }
+            } else {
+                obj = xml.textContent;
+            }
+            return obj;
+        } catch (e) {
+            console.log(e.message);
+        }
+    }
+</script>
