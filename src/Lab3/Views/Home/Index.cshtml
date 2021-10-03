@@ -36,7 +36,7 @@
 
     function ProccessGet() {
         let contentType = $("#contentType").val();
-        let contentTypeCustom = "application/" + contentType;        
+        let contentTypeCustom = "application/" + contentType;
 
         let params = "?";
         params += `ContentType=${contentType.toUpperCase()}&` +
@@ -79,6 +79,9 @@
 
                 if (contentType.toLowerCase() === "xml") {
                     error = ConvertErrorResultFromXMLToJson(error.responseXML);
+                }
+                else {
+                    error = error.responseJSON;
                 }
                 
                 let html = `<button onclick='ProccessError(this)' method="${error.HATEOAS.Method}" url='${error.HATEOAS.Href}'>${error.HATEOAS.Ref}</button>`;
@@ -169,7 +172,6 @@
     }
 
     function ShowResult(result) {
-
         $(".result:first").html(result)
     }
 
