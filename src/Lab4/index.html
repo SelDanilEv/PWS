@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<!--Open it as a static file-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ii</title>
+    <script src="jquery.min.js"></script>
+    <script>
+        function makeAjax() {
+            const data = {
+                x: $("#x").val(),
+                y: $("#y").val()
+            };
+            const url = `/Simplex.asmx/sumjson?x=${data.x}&y=${data.y}`;
+            console.log(url)
+            $.ajax({
+                url: url,
+                type: "GET",
+                contentType: "application/json",
+                success: result => {
+                    $("#result").val(result.d);
+                },
+                error: error => {
+                    console.log(error);
+                    $("#result").val(error.statusText);
+                }
+            })
+        }
+
+        if (window.location.host === "") {
+            alert("Open this file as static(http://localhost:port/index.html)")
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <input type="number" id="x" placeholder="x" />
+        <input type="number" id="y" placeholder="y"/>
+        <input type="button" onclick="makeAjax()" value="SUM" />
+    </div>
+    <div>
+        <input type="text" id="result" />
+    </div>
+</body>
+</html>

@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://sde/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://sde/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://sde/">
+      <s:element name="sum">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="x" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="y" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="sumResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="sumResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="concat">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="s" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="d" type="s:double" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="concatResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="concatResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="sumA">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="a1" type="tns:A" />
+            <s:element minOccurs="0" maxOccurs="1" name="a2" type="tns:A" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="A">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="s" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="k" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="f" type="s:float" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="sumAResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sumAResult" type="tns:A" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="sumjson">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="x" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="y" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="sumjsonResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="sumjsonResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getjsonA">
+        <s:complexType />
+      </s:element>
+      <s:element name="getjsonAResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getjsonAResult" type="tns:A" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="int" type="s:int" />
+      <s:element name="string" nillable="true" type="s:string" />
+      <s:element name="A" nillable="true" type="tns:A" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="sumSoapIn">
+    <wsdl:part name="parameters" element="tns:sum" />
+  </wsdl:message>
+  <wsdl:message name="sumSoapOut">
+    <wsdl:part name="parameters" element="tns:sumResponse" />
+  </wsdl:message>
+  <wsdl:message name="concatSoapIn">
+    <wsdl:part name="parameters" element="tns:concat" />
+  </wsdl:message>
+  <wsdl:message name="concatSoapOut">
+    <wsdl:part name="parameters" element="tns:concatResponse" />
+  </wsdl:message>
+  <wsdl:message name="sumASoapIn">
+    <wsdl:part name="parameters" element="tns:sumA" />
+  </wsdl:message>
+  <wsdl:message name="sumASoapOut">
+    <wsdl:part name="parameters" element="tns:sumAResponse" />
+  </wsdl:message>
+  <wsdl:message name="sumjsonSoapIn">
+    <wsdl:part name="parameters" element="tns:sumjson" />
+  </wsdl:message>
+  <wsdl:message name="sumjsonSoapOut">
+    <wsdl:part name="parameters" element="tns:sumjsonResponse" />
+  </wsdl:message>
+  <wsdl:message name="getjsonASoapIn">
+    <wsdl:part name="parameters" element="tns:getjsonA" />
+  </wsdl:message>
+  <wsdl:message name="getjsonASoapOut">
+    <wsdl:part name="parameters" element="tns:getjsonAResponse" />
+  </wsdl:message>
+  <wsdl:message name="sumHttpGetIn">
+    <wsdl:part name="x" type="s:string" />
+    <wsdl:part name="y" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="sumHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="concatHttpGetIn">
+    <wsdl:part name="s" type="s:string" />
+    <wsdl:part name="d" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="concatHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="sumjsonHttpGetIn">
+    <wsdl:part name="x" type="s:string" />
+    <wsdl:part name="y" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="sumjsonHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="getjsonAHttpGetIn" />
+  <wsdl:message name="getjsonAHttpGetOut">
+    <wsdl:part name="Body" element="tns:A" />
+  </wsdl:message>
+  <wsdl:message name="sumHttpPostIn">
+    <wsdl:part name="x" type="s:string" />
+    <wsdl:part name="y" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="sumHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="concatHttpPostIn">
+    <wsdl:part name="s" type="s:string" />
+    <wsdl:part name="d" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="concatHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="sumjsonHttpPostIn">
+    <wsdl:part name="x" type="s:string" />
+    <wsdl:part name="y" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="sumjsonHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="getjsonAHttpPostIn" />
+  <wsdl:message name="getjsonAHttpPostOut">
+    <wsdl:part name="Body" element="tns:A" />
+  </wsdl:message>
+  <wsdl:portType name="SimplexSoap">
+    <wsdl:operation name="Add">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Calc sum of 2 int values</wsdl:documentation>
+      <wsdl:input name="sum" message="tns:sumSoapIn" />
+      <wsdl:output name="sum" message="tns:sumSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Concat">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Concatination of string and double</wsdl:documentation>
+      <wsdl:input name="concat" message="tns:concatSoapIn" />
+      <wsdl:output name="concat" message="tns:concatSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Sum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Sum of two A objects</wsdl:documentation>
+      <wsdl:input name="sumA" message="tns:sumASoapIn" />
+      <wsdl:output name="sumA" message="tns:sumASoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Adds">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Sum of 2 int. Response JSON</wsdl:documentation>
+      <wsdl:input name="sumjson" message="tns:sumjsonSoapIn" />
+      <wsdl:output name="sumjson" message="tns:sumjsonSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetA">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Example of JSON</wsdl:documentation>
+      <wsdl:input name="getjsonA" message="tns:getjsonASoapIn" />
+      <wsdl:output name="getjsonA" message="tns:getjsonASoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="SimplexHttpGet">
+    <wsdl:operation name="Add">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Calc sum of 2 int values</wsdl:documentation>
+      <wsdl:input name="sum" message="tns:sumHttpGetIn" />
+      <wsdl:output name="sum" message="tns:sumHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Concat">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Concatination of string and double</wsdl:documentation>
+      <wsdl:input name="concat" message="tns:concatHttpGetIn" />
+      <wsdl:output name="concat" message="tns:concatHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Adds">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Sum of 2 int. Response JSON</wsdl:documentation>
+      <wsdl:input name="sumjson" message="tns:sumjsonHttpGetIn" />
+      <wsdl:output name="sumjson" message="tns:sumjsonHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetA">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Example of JSON</wsdl:documentation>
+      <wsdl:input name="getjsonA" message="tns:getjsonAHttpGetIn" />
+      <wsdl:output name="getjsonA" message="tns:getjsonAHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="SimplexHttpPost">
+    <wsdl:operation name="Add">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Calc sum of 2 int values</wsdl:documentation>
+      <wsdl:input name="sum" message="tns:sumHttpPostIn" />
+      <wsdl:output name="sum" message="tns:sumHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Concat">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Concatination of string and double</wsdl:documentation>
+      <wsdl:input name="concat" message="tns:concatHttpPostIn" />
+      <wsdl:output name="concat" message="tns:concatHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Adds">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Sum of 2 int. Response JSON</wsdl:documentation>
+      <wsdl:input name="sumjson" message="tns:sumjsonHttpPostIn" />
+      <wsdl:output name="sumjson" message="tns:sumjsonHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetA">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Example of JSON</wsdl:documentation>
+      <wsdl:input name="getjsonA" message="tns:getjsonAHttpPostIn" />
+      <wsdl:output name="getjsonA" message="tns:getjsonAHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SimplexSoap" type="tns:SimplexSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Add">
+      <soap:operation soapAction="http://sde/sum" style="document" />
+      <wsdl:input name="sum">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="sum">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Concat">
+      <soap:operation soapAction="http://sde/concat" style="document" />
+      <wsdl:input name="concat">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="concat">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Sum">
+      <soap:operation soapAction="http://sde/sumA" style="document" />
+      <wsdl:input name="sumA">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="sumA">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Adds">
+      <soap:operation soapAction="http://sde/sumjson" style="document" />
+      <wsdl:input name="sumjson">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="sumjson">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetA">
+      <soap:operation soapAction="http://sde/getjsonA" style="document" />
+      <wsdl:input name="getjsonA">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getjsonA">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SimplexSoap12" type="tns:SimplexSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Add">
+      <soap12:operation soapAction="http://sde/sum" style="document" />
+      <wsdl:input name="sum">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="sum">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Concat">
+      <soap12:operation soapAction="http://sde/concat" style="document" />
+      <wsdl:input name="concat">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="concat">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Sum">
+      <soap12:operation soapAction="http://sde/sumA" style="document" />
+      <wsdl:input name="sumA">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="sumA">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Adds">
+      <soap12:operation soapAction="http://sde/sumjson" style="document" />
+      <wsdl:input name="sumjson">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="sumjson">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetA">
+      <soap12:operation soapAction="http://sde/getjsonA" style="document" />
+      <wsdl:input name="getjsonA">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getjsonA">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SimplexHttpGet" type="tns:SimplexHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="Add">
+      <http:operation location="/sum" />
+      <wsdl:input name="sum">
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output name="sum">
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Concat">
+      <http:operation location="/concat" />
+      <wsdl:input name="concat">
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output name="concat">
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Adds">
+      <http:operation location="/sumjson" />
+      <wsdl:input name="sumjson">
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output name="sumjson">
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetA">
+      <http:operation location="/getjsonA" />
+      <wsdl:input name="getjsonA">
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output name="getjsonA">
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SimplexHttpPost" type="tns:SimplexHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="Add">
+      <http:operation location="/sum" />
+      <wsdl:input name="sum">
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output name="sum">
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Concat">
+      <http:operation location="/concat" />
+      <wsdl:input name="concat">
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output name="concat">
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Adds">
+      <http:operation location="/sumjson" />
+      <wsdl:input name="sumjson">
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output name="sumjson">
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetA">
+      <http:operation location="/getjsonA" />
+      <wsdl:input name="getjsonA">
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output name="getjsonA">
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Simplex">
+    <wsdl:port name="SimplexSoap" binding="tns:SimplexSoap">
+      <soap:address location="http://localhost:25085/Simplex.asmx" />
+    </wsdl:port>
+    <wsdl:port name="SimplexSoap12" binding="tns:SimplexSoap12">
+      <soap12:address location="http://localhost:25085/Simplex.asmx" />
+    </wsdl:port>
+    <wsdl:port name="SimplexHttpGet" binding="tns:SimplexHttpGet">
+      <http:address location="http://localhost:25085/Simplex.asmx" />
+    </wsdl:port>
+    <wsdl:port name="SimplexHttpPost" binding="tns:SimplexHttpPost">
+      <http:address location="http://localhost:25085/Simplex.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
