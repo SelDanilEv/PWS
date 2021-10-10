@@ -43,6 +43,7 @@
             this.x = new System.Windows.Forms.TextBox();
             this.getSum = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // result_3
@@ -98,7 +99,7 @@
             this.d2.Name = "d2";
             this.d2.Size = new System.Drawing.Size(174, 41);
             this.d2.TabIndex = 25;
-            this.d2.Text = "5";
+            this.d2.Text = "5,4";
             // 
             // d1
             // 
@@ -128,7 +129,7 @@
             this.i1.Name = "i1";
             this.i1.Size = new System.Drawing.Size(174, 41);
             this.i1.TabIndex = 22;
-            this.i1.Text = "5.5";
+            this.i1.Text = "5";
             // 
             // s2
             // 
@@ -138,7 +139,7 @@
             this.s2.Name = "s2";
             this.s2.Size = new System.Drawing.Size(174, 41);
             this.s2.TabIndex = 21;
-            this.s2.Text = "str2";
+            this.s2.Text = "43";
             // 
             // s1
             // 
@@ -169,7 +170,7 @@
             this.y.Name = "y";
             this.y.Size = new System.Drawing.Size(174, 41);
             this.y.TabIndex = 17;
-            this.y.Text = "param2";
+            this.y.Text = "43";
             // 
             // x
             // 
@@ -205,11 +206,25 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "ASMX ref",
+            "ASMX proxy",
+            "WCF"});
+            this.comboBox1.Location = new System.Drawing.Point(528, 325);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 28);
+            this.comboBox1.TabIndex = 32;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(724, 407);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.result_3);
             this.Controls.Add(this.result_2);
@@ -250,6 +265,7 @@
         private System.Windows.Forms.TextBox x;
         private System.Windows.Forms.Button getSum;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }
 

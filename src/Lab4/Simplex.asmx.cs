@@ -1,9 +1,10 @@
-﻿using System.Web.Script.Services;
+﻿using Infrastructure.Model.Lab4;
+using System.Web.Script.Services;
 using System.Web.Services;
 
 namespace Lab4
 {
-    [WebService(Namespace = "http://sde/")]
+    [WebService(Namespace = "http://sde/", Description ="Defender Service")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
     [ScriptService]

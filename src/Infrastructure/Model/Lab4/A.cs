@@ -1,6 +1,4 @@
-﻿
-
-namespace Lab4
+﻿namespace Infrastructure.Model.Lab4
 {
     public class A
     {

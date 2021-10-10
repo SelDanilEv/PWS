@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="dfee2bc3-bea0-4b3e-9642-cccc9b05f11a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:59122/WCFSiplex.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="WCFSiplex.xsd" MetadataType="Schema" ID="e003026c-22ac-4b23-bb11-73bec1fa4a5d" SourceId="1" SourceUrl="http://localhost:59122/WCFSiplex.svc?xsd=xsd1" />
+    <MetadataFile FileName="WCFSiplex.wsdl" MetadataType="Wsdl" ID="de31dbfd-454a-4183-964b-5caf47cc6446" SourceId="1" SourceUrl="http://localhost:59122/WCFSiplex.svc?wsdl" />
+    <MetadataFile FileName="WCFSiplex1.xsd" MetadataType="Schema" ID="85ee18b9-6ceb-407a-903e-043b86516ffe" SourceId="1" SourceUrl="http://localhost:59122/WCFSiplex.svc?xsd=xsd2" />
+    <MetadataFile FileName="WCFSiplex2.xsd" MetadataType="Schema" ID="e119ca47-91ec-4b02-9c3c-4f4c537e9637" SourceId="1" SourceUrl="http://localhost:59122/WCFSiplex.svc?xsd=xsd3" />
+    <MetadataFile FileName="WCFSiplex3.xsd" MetadataType="Schema" ID="0ef6435f-0b1b-441d-ac43-049039502ccd" SourceId="1" SourceUrl="http://localhost:59122/WCFSiplex.svc?xsd=xsd0" />
+    <MetadataFile FileName="WCFSiplex.disco" MetadataType="Disco" ID="8625dcb0-755d-46fb-8e0e-83968cc365af" SourceId="1" SourceUrl="http://localhost:59122/WCFSiplex.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

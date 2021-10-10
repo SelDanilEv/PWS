@@ -8,10 +8,11 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Forms</RootNamespace>
     <AssemblyName>Forms</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,9 +35,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.Composition.Registration" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,9 +51,21 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ASMXService.cs" />
     <Compile Include="Connected Services\ASMXServiceLab4\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\NetTcpBindingConsole\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\WCFService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -61,6 +78,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="service.cs" />
+    <Compile Include="SimplexInterfaces.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -72,6 +91,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Connected Services\ASMXServiceLab4\Forms.ASMXServiceLab4.A.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -92,6 +112,39 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\ASMXServiceLab4\Simplex.wsdl" />
+    <None Include="Connected Services\NetTcpBindingConsole\Forms.NetTcpBindingConsole.CompositeType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NetTcpBindingConsole\item.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\NetTcpBindingConsole\item1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\NetTcpBindingConsole\item2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\NetTcpBindingConsole\item3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\NetTcpBindingConsole\WCFSiplex.wsdl" />
+    <None Include="Connected Services\WCFService\Forms.WCFService.CompositeType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\WCFService\WCFSiplex.wsdl" />
+    <None Include="Connected Services\WCFService\WCFSiplex.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WCFService\WCFSiplex1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WCFService\WCFSiplex2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WCFService\WCFSiplex3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\DataSources\Infrastructure.Model.Lab4.A.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -110,6 +163,8 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\ASMXServiceLab4\" />
+    <WCFMetadataStorage Include="Connected Services\NetTcpBindingConsole\" />
+    <WCFMetadataStorage Include="Connected Services\WCFService\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\ASMXServiceLab4\Simplex.disco" />
@@ -131,6 +186,36 @@
       <Project>{CD645CB1-3488-40FB-9A24-78802B39B65E}</Project>
       <Name>Infrastructure</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WCFService\WCFSiplex.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WCFService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WCFService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WCFService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\NetTcpBindingConsole\item.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\NetTcpBindingConsole\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\NetTcpBindingConsole\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\NetTcpBindingConsole\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
