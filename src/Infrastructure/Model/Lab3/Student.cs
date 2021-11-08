@@ -12,7 +12,6 @@ namespace Infrastructure.Model.Lab3
         public string Name { get => name; set => name = value; }
         public string Phone { get => phone; set => phone = value; }
 
-
         public Student() { }
         public Student(string name, string phone)
         {
