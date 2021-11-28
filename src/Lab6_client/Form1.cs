@@ -40,8 +40,10 @@ namespace Lab6_client
 
         private void button3_Click(object sender, EventArgs e)
         {
-            client.Execute<Student>
-                (new Uri($"https://localhost:44353/WcfDataService1.svc/InsertStudent?name=\'{textBox1.Text}\'"));
+            client.AddToStudent(new Student() { Name = textBox1.Text });
+            client.SaveChanges();
+            //client.Execute<Student>
+            //    (new Uri($"https://localhost:44353/WcfDataService1.svc/InsertStudent?name=\'{textBox1.Text}\'"));
         }
 
         private void button4_Click(object sender, EventArgs e)
