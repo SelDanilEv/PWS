@@ -1,142 +1,246 @@
-﻿using Lab8_JsonRpc.Models;
+﻿using Infrastructure.Enum;
+using Lab8_JsonRpc.Models;
+using Newtonsoft.Json.Linq;
+using Services;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using System.Web.Mvc;
 using System.Web.SessionState;
-using Newtonsoft.Json;
 
 namespace Lab8_JsonRpc.Controllers
 {
-    [SessionState(SessionStateBehavior.Required)]
+    [System.Web.Mvc.SessionState(SessionStateBehavior.Required)]
     public class JRServiceController : ApiController
     {
-        private static bool ignoreMethods = false;
-
-        [System.Web.Http.HttpPost]
-        public object Single(ReqJsonRPC body)
+        private class JSServiceResults
         {
-            if (ignoreMethods)
-            return Json(GetError(body.Id, body.JsonRPC, new ErrorJsonRPC { Message = "Methods are not available", Code = -32601 }));
+            public JsonRPCErrorResponse[] JsonRPCErrorResponses { get; set; }
+            public JsonRPCResponse[] JsonRPCResponses { get; set; }
+        }
 
-            string method = body.Method;
-            DataModel param = body.Params;
-            string key = param.Key;
-            int value = int.Parse(param.Value == null || param.Value == "" ? "0" : param.Value); // default value = 0
-            int? result = null;
+        private readonly SessionService _sessionService;
+        private const string BlockedSessionKey = "IsSessionBlocked";
 
-            switch (method)
+        private ConcurrentBag<JsonRPCResponse> _resultCollection;
+        private ConcurrentBag<JsonRPCErrorResponse> _errorResultCollection;
+        private HttpContext _currentHttpContext;
+
+        public JRServiceController()
+        {
+            _sessionService = new SessionService();
+            _resultCollection = new ConcurrentBag<JsonRPCResponse>();
+            _errorResultCollection = new ConcurrentBag<JsonRPCErrorResponse>();
+        }
+
+        [HttpPost]
+        public object Single(object input, bool isParallel = true)
+        {
+            if (_sessionService.GetSessionData<bool>(BlockedSessionKey))
             {
-                case "SetM":
-                    {
-                        result = SetM(key, value);
-                        break;
-                    }
-                case "GetM":
-                    {
-                        result = GetM(key);
-                        break;
-                    }
-                case "AddM":
-                    {
-                        result = AddM(key, value);
-                        break;
-                    }
-                case "SubM":
-                    {
-                        result = SubM(key, value);
-                        break;
-                    }
-                case "MulM":
-                    {
-                        result = MulM(key, value);
-                        break;
-                    }
-                case "DivM":
-                    {
-                        result = DivM(key, value);
-                        break;
-                    }
-                case "ErrorExit":
-                    {
-                        ErrorExit();
-                        break;
-                    }
-                default:
-                    {
-                        return Json(GetError(body.Id, body.JsonRPC, new ErrorJsonRPC { Message = string.Format("Function {0} is not found", body.Method), Code = -32601 }));
-                    }
+                return Json(JsonRPCErrorResponse.FromCommonResponse(
+                        JsonRPCResponse.Empty, JsonRPCError.ServerBlocked));
             }
-            return Json(new ResJsonRPC()
-            {
-                Id = body.Id,
-                JsonRPC = body.JsonRPC,
-                Method = body.Method,
-                Result = result
-            }
-            );
-        }
-        ////////////////////////////////////
-        private ResJsonRPCError GetError(string id, string jsonRPC, ErrorJsonRPC error)
-        {
-            return new ResJsonRPCError()
-            {
-                Id = id,
-                JsonRPC = jsonRPC,
-                Error = error
-            };
-        }
-        ////////////////////////////////////
-        private int? SetM(string k, int x)
-        {
-            HttpContext.Current.Session[k] = x;
-            return GetM(k);
-        }
 
-        private int? GetM(string k)
-        {
-            object result = HttpContext.Current.Session[k];
-            if (result == null)
-                return null;
+            object request = null;
+            Lab8ResponseType responseType = Lab8ResponseType.Invalid;
+
+            var token = JToken.Parse(input.ToString());
+
+            if (token is JArray)
+            {
+                try
+                {
+                    request = token.ToObject<ICollection<JsonRPCRequest>>();
+                    var jsonRPCRequests = request as ICollection<JsonRPCRequest>;
+                    _currentHttpContext = HttpContext.Current;
+
+                    Stopwatch stopwatch = new Stopwatch();
+
+                    if (isParallel)
+                    {
+                        stopwatch.Start();
+                        ParallelLoopResult parallelForEachResult =
+                            Parallel.ForEach<JsonRPCRequest>(jsonRPCRequests,
+                            ProccessRPCRequest);
+                        stopwatch.Stop();
+                        Console.WriteLine("Parallel");
+                        Console.WriteLine(stopwatch.ElapsedTicks);
+                    }
+                    else
+                    {
+                        stopwatch.Reset();
+                        stopwatch.Start();
+                        foreach (var item in jsonRPCRequests)
+                        {
+                            ProccessRPCRequest(item);
+                        }
+                        stopwatch.Stop();
+                        Console.WriteLine("Not Parallel");
+                        Console.WriteLine(stopwatch.ElapsedTicks);
+                    }
+
+
+                    responseType = Lab8ResponseType.Array;
+                }
+                catch { }
+            }
+            else if (token is JObject)
+            {
+                try
+                {
+                    request = token.ToObject<JsonRPCRequest>();
+                    var jsonRPCRequest = request as JsonRPCRequest;
+                    ProccessRPCRequest(jsonRPCRequest);
+                    responseType = Lab8ResponseType.SingleObject;
+                }
+                catch { }
+            }
+
+            if (request == null)
+            {
+                return Json(new JsonRPCErrorResponse()
+                {
+                    Id = "-1",
+                    Error = JsonRPCError.InvalidParams
+                });
+            }
+
+            if (responseType == Lab8ResponseType.SingleObject)
+            {
+                if (_errorResultCollection.Count > 0)
+                    return Json(_errorResultCollection.FirstOrDefault());
+                return Json(_resultCollection.FirstOrDefault());
+            }
             else
-                return int.Parse(result.ToString());
+            {
+                return Json(new JSServiceResults()
+                {
+                    JsonRPCErrorResponses = _errorResultCollection.ToArray(),
+                    JsonRPCResponses = _resultCollection.ToArray()
+                });
+            }
         }
 
-        private int? AddM(string k, int x)
+        public void ProccessRPCRequest(JsonRPCRequest jsonRPCRequest)
         {
-            int? value = GetM(k);
-            HttpContext.Current.Session[k] = value == null ? x : value + x;
-            return GetM(k);
+            if (_currentHttpContext != null)
+            {
+                HttpContext.Current = _currentHttpContext;
+            }
+
+            var response = new JsonRPCResponse();
+            response.Id = jsonRPCRequest.Id;
+            response.JsonRPC = jsonRPCRequest.JsonRPC;
+
+            try
+            {
+                var requestData = jsonRPCRequest.Params;
+                var result = new Dictionary<string, string>();
+
+                if (requestData != null)
+                {
+                    foreach (var data in requestData)
+                    {
+                        var keyValue = new KeyValuePair<string, int>();
+                        switch (jsonRPCRequest.Method)
+                        {
+                            case JsonRPCMethod.SetM:
+                                keyValue = SetM(data.Key, int.Parse(data.Value.ToString()));
+                                break;
+                            case JsonRPCMethod.GetM:
+                                keyValue = GetM(data.Key);
+                                break;
+                            case JsonRPCMethod.AddM:
+                                keyValue = AddM(data.Key, int.Parse(data.Value.ToString()));
+                                break;
+                            case JsonRPCMethod.SubM:
+                                keyValue = SubM(data.Key, int.Parse(data.Value.ToString()));
+                                break;
+                            case JsonRPCMethod.MulM:
+                                keyValue = MulM(data.Key, int.Parse(data.Value.ToString()));
+                                break;
+                            case JsonRPCMethod.DivM:
+                                keyValue = DivM(data.Key, int.Parse(data.Value.ToString()));
+                                break;
+                            case JsonRPCMethod.ErrorExit:
+                                keyValue = new KeyValuePair<string, int>(string.Empty, 0);
+                                _errorResultCollection.Add(JsonRPCErrorResponse.FromCommonResponse(response, JsonRPCError.ServerBlocked));
+                                ErrorExit();
+                                break;
+                            default:
+                                keyValue = new KeyValuePair<string, int>(string.Empty, 0);
+                                _errorResultCollection.Add(JsonRPCErrorResponse.FromCommonResponse(response, JsonRPCError.MethodNotFound));
+                                break;
+                        }
+
+                        result.Add(keyValue.Key, keyValue.Value.ToString());
+                    }
+                }
+
+                response.Result = result;
+
+                _resultCollection.Add(response);
+            }
+            catch (Exception ex)
+            {
+                _errorResultCollection.Add(JsonRPCErrorResponse.FromCommonResponse(response,
+                    JsonRPCError.UnexpectedError(ex.Message)));
+            }
         }
 
-        private int? SubM(string k, int x)
+        private KeyValuePair<string, int> SetM(string key, int value)
         {
-            int? value = GetM(k);
-            HttpContext.Current.Session[k] = value == null ? x : value - x;
-            return GetM(k);
+            _sessionService.SetSessionData(key, value);
+
+            return GetM(key);
         }
 
-        private int? MulM(string k, int x)
+        private KeyValuePair<string, int> GetM(string key)
         {
-            int? value = GetM(k);
-            HttpContext.Current.Session[k] = value == null ? x : value * x;
-            return GetM(k);
+            var value = _sessionService.GetSessionData<int>(key);
+
+            var result = new KeyValuePair<string, int>(key, value);
+
+            return result;
         }
 
-        private int? DivM(string k, int x)
+        private KeyValuePair<string, int> AddM(string key, int value)
         {
-            int? value = GetM(k);
-            HttpContext.Current.Session[k] = value == null ? x : value / x;
-            return GetM(k);
+            int currentValue = GetM(key).Value;
+            _sessionService.SetSessionData(key, currentValue + value);
+            return GetM(key);
+        }
+
+        private KeyValuePair<string, int> SubM(string key, int value)
+        {
+            int currentValue = GetM(key).Value;
+            _sessionService.SetSessionData(key, currentValue - value);
+            return GetM(key);
+        }
+
+        private KeyValuePair<string, int> MulM(string key, int value)
+        {
+            int currentValue = GetM(key).Value;
+            _sessionService.SetSessionData(key, currentValue * value);
+            return GetM(key);
+        }
+
+        private KeyValuePair<string, int> DivM(string key, int value)
+        {
+            int currentValue = GetM(key).Value;
+            _sessionService.SetSessionData(key, currentValue / value);
+            return GetM(key);
         }
 
         private void ErrorExit()
         {
-            HttpContext.Current.Session.Clear();
-            //HttpContext.Session["MethodsIgnore"] = true;
-            ignoreMethods = true;
+            _sessionService.ClearSession();
+            _sessionService.SetSessionData(BlockedSessionKey, true);
         }
     }
 }

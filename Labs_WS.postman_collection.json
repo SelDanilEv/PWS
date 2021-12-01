@@ -346,6 +346,423 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "GetWSDL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Lab6",
+			"item": [
+				{
+					"name": "Get all notes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "Get all students",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "Get all students Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "Create student",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Lab8",
+			"item": [
+				{
+					"name": "Sample1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"Id\": \"1\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param1\": 6,\r\n            \"param2\": 10\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"2\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param3\": 90,\r\n            \"param4\": 10\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"3\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param5\": 40,\r\n            \"param6\": 70\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"4\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param7\": 40,\r\n            \"param8\": 70\r\n        }\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:54466/api/JRService/Single",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "54466",
+							"path": [
+								"api",
+								"JRService",
+								"Single"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sample2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"Id\": \"1\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param1\": 6,\r\n            \"param2\": 10\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"2\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param3\": 90,\r\n            \"param4\": 10\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"3\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param5\": 40,\r\n            \"param6\": 70\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"4\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param7\": 40,\r\n            \"param8\": 70\r\n        }\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:54466/api/JRService/Single",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "54466",
+							"path": [
+								"api",
+								"JRService",
+								"Single"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"Id\": \"1\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param1\": 6,\r\n            \"param2\": 10\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"2\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param3\": 90,\r\n            \"param4\": 10\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"3\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param5\": 40,\r\n            \"param6\": 70\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"4\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param7\": 40,\r\n            \"param8\": 70\r\n        }\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:54466/api/JRService/Single",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "54466",
+							"path": [
+								"api",
+								"JRService",
+								"Single"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"Id\": \"1\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param1\": 6,\r\n            \"param2\": 10\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"2\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param3\": 90,\r\n            \"param4\": 10\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"3\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param5\": 40,\r\n            \"param6\": 70\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"4\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param7\": 40,\r\n            \"param8\": 70\r\n        }\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:54466/api/JRService/Single",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "54466",
+							"path": [
+								"api",
+								"JRService",
+								"Single"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sum",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"Id\": \"1\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param1\": 6,\r\n            \"param2\": 10\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"2\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param3\": 90,\r\n            \"param4\": 10\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"3\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param5\": 40,\r\n            \"param6\": 70\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"4\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param7\": 40,\r\n            \"param8\": 70\r\n        }\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:54466/api/JRService/Single",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "54466",
+							"path": [
+								"api",
+								"JRService",
+								"Single"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sub",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"Id\": \"1\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param1\": 6,\r\n            \"param2\": 10\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"2\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param3\": 90,\r\n            \"param4\": 10\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"3\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param5\": 40,\r\n            \"param6\": 70\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"4\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param7\": 40,\r\n            \"param8\": 70\r\n        }\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:54466/api/JRService/Single",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "54466",
+							"path": [
+								"api",
+								"JRService",
+								"Single"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mul",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"Id\": \"1\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param1\": 6,\r\n            \"param2\": 10\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"2\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param3\": 90,\r\n            \"param4\": 10\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"3\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param5\": 40,\r\n            \"param6\": 70\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"4\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param7\": 40,\r\n            \"param8\": 70\r\n        }\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:54466/api/JRService/Single",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "54466",
+							"path": [
+								"api",
+								"JRService",
+								"Single"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Div",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"Id\": \"1\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param1\": 6,\r\n            \"param2\": 10\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"2\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param3\": 90,\r\n            \"param4\": 10\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"3\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param5\": 40,\r\n            \"param6\": 70\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"4\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param7\": 40,\r\n            \"param8\": 70\r\n        }\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:54466/api/JRService/Single",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "54466",
+							"path": [
+								"api",
+								"JRService",
+								"Single"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ErrorExit",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Id\": \"1\",\r\n    \"JsonRPC\": \"2.0\",\r\n    \"Method\": \"ErrorExit\",\r\n    \"Params\": {\r\n        \"p\":1\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:54466/api/JRService/Single",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "54466",
+							"path": [
+								"api",
+								"JRService",
+								"Single"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SampleErrors",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"Id\": \"1\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param1\": 6,\r\n            \"param2\": 10\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"2\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param3\": 90,\r\n            \"param4\": 10\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"3\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param5\": 40,\r\n            \"param6\": 70\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"4\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param7\": 40,\r\n            \"param8\": 70\r\n        }\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:54466/api/JRService/Single",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "54466",
+							"path": [
+								"api",
+								"JRService",
+								"Single"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sample3",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"Id\": \"1\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param1\": 6,\r\n            \"param2\": 10\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"2\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param3\": 90,\r\n            \"param4\": 10\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"3\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param5\": 40,\r\n            \"param6\": 70\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"4\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param7\": 40,\r\n            \"param8\": 70\r\n        }\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:54466/api/JRService/Single",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "54466",
+							"path": [
+								"api",
+								"JRService",
+								"Single"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SampleError2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"Id\": \"1\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param1\": 6,\r\n            \"param2\": 10\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"2\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param3\": 90,\r\n            \"param4\": 10\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"3\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param5\": 40,\r\n            \"param6\": 70\r\n        }\r\n    },\r\n    {\r\n        \"Id\": \"4\",\r\n        \"JsonRPC\": \"2.0\",\r\n        \"Method\": \"SetM\",\r\n        \"Params\": {\r\n            \"param7\": 40,\r\n            \"param8\": 70\r\n        }\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:54466/api/JRService/Single",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "54466",
+							"path": [
+								"api",
+								"JRService",
+								"Single"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
